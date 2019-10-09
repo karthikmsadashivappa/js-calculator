@@ -1,6 +1,6 @@
 var runningTotal = 0;
 var buffer = "0";
-var previousOperator;
+var previousOperator = null;
 
 const screen = document.querySelector(".screen");
 
@@ -19,6 +19,15 @@ function handleSymbol(symbol) {
   switch (symbol) {
     case "C":
       buffer = "0";
+      runningTotal = 0;
+      break;
+    case "=":
+      if (previousOperator === null) {
+        return;
+      }
+      flushOperation(parseInt(buffer));
+      previousOperator = null;
+      buffer = runningTotal;
       runningTotal = 0;
       break;
     case "+":
